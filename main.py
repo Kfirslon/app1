@@ -201,7 +201,7 @@ def view_jobs():
             pickup_requests[index]['ratings'].append(rating)
         elif 'delete' in request.form:
             pickup_requests.pop(index)
-
+        
         with open(JOB_FILE, "w") as f:
             json.dump(pickup_requests, f)
 
