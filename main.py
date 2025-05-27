@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template_string, request, redirect, url_for, session, flash
 import json, os
 
@@ -169,7 +168,7 @@ def request_pickup():
     return render_template_string(HTML_HEAD + """
     <h2>Request Pickup</h2>
     <form method="POST" enctype="multipart/form-data">
-        <div class="form-group"><label>Name (First and Last):</label><input name="name" required></div>
+        <div class="form-group"><label>Name (First and Last):</label><input name="name" value="{}" required></div>
         <div class="form-group"><label>Location (Zip or Building):</label><input name="location" required></div>
         <div class="form-group"><label>Floor:</label><input name="floor" required></div>
         <div class="form-group"><label>Number of Bags:</label><input name="bags" required></div>
@@ -182,7 +181,7 @@ def request_pickup():
         <div class="form-group"><label>Photo:</label><input type="file" name="photo"></div>
         <button>Submit Request</button>
     </form>
-    """ + HTML_FOOT)
+    """.format(session['user']['name']) + HTML_FOOT)
 
 @app.route('/jobs', methods=['GET', 'POST'])
 def view_jobs():
@@ -200,7 +199,7 @@ def view_jobs():
             pickup_requests[index]['ratings'].append(rating)
         elif 'delete' in request.form:
             pickup_requests.pop(index)
-        
+
         with open(JOB_FILE, "w") as f:
             json.dump(pickup_requests, f)
 
