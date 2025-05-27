@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template_string, request, redirect, url_for, session, flash
+from flask import Flask, render_template_string, request, redirect, url_for, session, flash, send_from_directory
 import json, os
 
 from werkzeug.utils import secure_filename
@@ -145,7 +145,7 @@ def request_pickup():
             photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         pickup_requests.append({
-            'name': session['user']['name'],
+            'name': request.form['name'],
             'email': session['user']['email'],
             'accepted_by': None,
             'accepted_by_email': None,
@@ -266,6 +266,10 @@ def view_jobs():
         </div>
         """
     return render_template_string(job_list + DISCLAIMER + HTML_FOOT)
+
+@app.route('/static/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
