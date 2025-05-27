@@ -202,6 +202,15 @@ def view_jobs():
         elif 'rating' in request.form:
             rating = int(request.form['rating'])
             pickup_requests[index]['ratings'].append(rating)
+        elif 'edit' in request.form:
+            # Update job with new information
+            pickup_requests[index]['location'] = request.form['location']
+            pickup_requests[index]['floor'] = request.form['floor']
+            pickup_requests[index]['bags'] = request.form['bags']
+            pickup_requests[index]['pickup_time'] = request.form['pickup_time']
+            pickup_requests[index]['notes'] = request.form['notes']
+            pickup_requests[index]['contact'] = request.form['contact']
+            pickup_requests[index]['price'] = request.form['price']
         elif 'delete' in request.form:
             pickup_requests.pop(index)
         
@@ -267,11 +276,29 @@ def view_jobs():
                 <!-- Message button (email) -->
             {f"<a href='mailto:{job['contact']}'><button>Message</button></a>" if job['email'] != session['user']['email'] else ''}
 
+                <!-- Edit Job (only for job creator and if not accepted yet) -->
+            {f'''
+            <div style="margin-top:10px; padding:10px; background:#f0f8ff; border-radius:5px;">
+                <strong>Edit Job:</strong>
+                <form method="POST">
+                    <input type="hidden" name="job_index" value="{i}">
+                    <div style="margin:5px 0;"><label>Location:</label><input name="location" value="{job.get('location', '')}" required></div>
+                    <div style="margin:5px 0;"><label>Floor:</label><input name="floor" value="{job['floor']}" required></div>
+                    <div style="margin:5px 0;"><label>Bags:</label><input name="bags" value="{job['bags']}" required></div>
+                    <div style="margin:5px 0;"><label>Pickup Time:</label><input name="pickup_time" value="{job.get('pickup_time', '')}" required></div>
+                    <div style="margin:5px 0;"><label>Notes:</label><textarea name="notes">{job['notes']}</textarea></div>
+                    <div style="margin:5px 0;"><label>Contact:</label><input name="contact" value="{job.get('contact', '')}" required></div>
+                    <div style="margin:5px 0;"><label>Price ($):</label>
+                    <select name="price">''' + ''.join([f'<option {"selected" if str(job.get("price")) == str(p) else ""}>{p}</option>' for p in range(1, 11)]) + f'''</select></div>
+                    <button type="submit" name="edit" style="background:#007bff;">Update Job</button>
+                </form>
+            </div>''' if job['email'] == session['user']['email'] and not job.get('accepted_by') else ''}
+
                 <!-- Delete button -->
             {f'''
             <form method="POST">
                 <input type="hidden" name="job_index" value="{i}">
-                <button type="submit" name="delete">Delete Job</button>
+                <button type="submit" name="delete" style="background:#dc3545;">Delete Job</button>
             </form>''' if job['email'] == session['user']['email'] else ''}
         </div>
         """
