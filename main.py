@@ -164,7 +164,7 @@ def request_pickup():
         with open(JOB_FILE, "w") as f:
             json.dump(pickup_requests, f)
 
-            return redirect(url_for('view_jobs'))
+        return redirect(url_for('view_jobs'))
 
     return render_template_string(HTML_HEAD + """
     <h2>Request Pickup</h2>
@@ -190,16 +190,19 @@ def view_jobs():
         return redirect(url_for('login'))
     if request.method == 'POST':
         index = int(request.form['job_index'])
-    if 'accept' in request.form:
-        pickup_requests[index]['accepted_by'] = session['user']['name']
-        pickup_requests[index]['accepted_by_email'] = session['user']['email']
-    elif 'toggle_pickup' in request.form:
-        pickup_requests[index]['picked_up'] = not pickup_requests[index].get('picked_up', False)
-    elif 'rating' in request.form:
-        rating = int(request.form['rating'])
-        pickup_requests[index]['ratings'].append(rating)
-    elif 'delete' in request.form:
-        pickup_requests.pop(index)
+        if 'accept' in request.form:
+            pickup_requests[index]['accepted_by'] = session['user']['name']
+            pickup_requests[index]['accepted_by_email'] = session['user']['email']
+        elif 'toggle_pickup' in request.form:
+            pickup_requests[index]['picked_up'] = not pickup_requests[index].get('picked_up', False)
+        elif 'rating' in request.form:
+            rating = int(request.form['rating'])
+            pickup_requests[index]['ratings'].append(rating)
+        elif 'delete' in request.form:
+            pickup_requests.pop(index)
+        
+        with open(JOB_FILE, "w") as f:
+            json.dump(pickup_requests, f)
 
     job_list = HTML_HEAD + "<h2>Available Pickups</h2>"
 
@@ -223,14 +226,12 @@ def view_jobs():
             Accepted by: {job['accepted_by'] if job['accepted_by'] else 'Available'}<br>
             {'<img src="/static/uploads/' + job['photo'] + '" style="margin-top:10px; max-width:200px;">' if job.get("photo") else ""}
 
-                <!-- Accept Job (if not accepted and not your own) -->
             {f'''
             <form method="POST">
                 <input type="hidden" name="job_index" value="{i}">
                 <button type="submit" name="accept">Accept This Job</button>
             </form>''' if not job['accepted_by'] and job['email'] != session['user']['email'] else ''}
 
-                <!-- Mark as picked up / Cancel -->
             {f'''
             <form method="POST">
                 <input type="hidden" name="job_index" value="{i}">
@@ -239,7 +240,6 @@ def view_jobs():
                 </button>
             </form>''' if session['user']['email'] in [job['email'], job.get('accepted_by_email')] else ''}
 
-                <!-- Rate the helper -->
             {f'''
             <form method="POST">
                 <input type="hidden" name="job_index" value="{i}">
@@ -250,10 +250,8 @@ def view_jobs():
                 <button type="submit">Submit Rating</button>
             </form>''' if job.get("picked_up") and job['email'] == session['user']['email'] and job.get('accepted_by') else ''}
 
-                <!-- Message button (email) -->
             {f"<a href='mailto:{job['contact']}'><button>Message</button></a>" if job['email'] != session['user']['email'] else ''}
 
-                <!-- Delete button -->
             {f'''
             <form method="POST">
                 <input type="hidden" name="job_index" value="{i}">
@@ -264,4 +262,4 @@ def view_jobs():
     return render_template_string(job_list + DISCLAIMER + HTML_FOOT)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
