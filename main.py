@@ -125,7 +125,7 @@ def login():
         user = users.get(email)
         if user and user['password'] == password:
             session['user'] = {'email': email, 'name': user['name']}
-            flash("Logged in.")
+            flash(f"Hello, {user['name']}! Welcome back.")
             return redirect(url_for('home'))
         flash("Invalid login.")
     return render_template_string(HTML_HEAD + """
