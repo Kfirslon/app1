@@ -194,6 +194,9 @@ def view_jobs():
         if 'accept' in request.form:
             pickup_requests[index]['accepted_by'] = session['user']['name']
             pickup_requests[index]['accepted_by_email'] = session['user']['email']
+        elif 'unaccept' in request.form:
+            pickup_requests[index]['accepted_by'] = None
+            pickup_requests[index]['accepted_by_email'] = None
         elif 'toggle_pickup' in request.form:
             pickup_requests[index]['picked_up'] = not pickup_requests[index].get('picked_up', False)
         elif 'rating' in request.form:
@@ -233,6 +236,13 @@ def view_jobs():
                 <input type="hidden" name="job_index" value="{i}">
                 <button type="submit" name="accept">Accept This Job</button>
             </form>''' if not job['accepted_by'] and job['email'] != session['user']['email'] else ''}
+
+                <!-- Unaccept Job (if you accepted it but haven't picked up yet) -->
+            {f'''
+            <form method="POST">
+                <input type="hidden" name="job_index" value="{i}">
+                <button type="submit" name="unaccept" style="background: #dc3545;">Remove Myself from Job</button>
+            </form>''' if job.get('accepted_by_email') == session['user']['email'] and not job.get('picked_up') else ''}
 
                 <!-- Mark as picked up / Cancel -->
             {f'''
