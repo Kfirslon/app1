@@ -40,7 +40,18 @@ input, select, textarea { width: 100%; padding: 8px; }
     border-left: 4px solid orange;
 }
 button { background: #28a745; color: white; border: none; padding: 8px 12px; cursor: pointer; }
-</style></head><body>
+</style>
+<script>
+function toggleEdit(jobIndex) {
+    var editForm = document.getElementById('edit-form-' + jobIndex);
+    if (editForm.style.display === 'none') {
+        editForm.style.display = 'block';
+    } else {
+        editForm.style.display = 'none';
+    }
+}
+</script>
+</head><body>
 <div class="nav">
     <a href="/">Home</a>
     <a href="/signup">Sign Up</a>
@@ -278,7 +289,8 @@ def view_jobs():
 
                 <!-- Edit Job (only for job creator and if not accepted yet) -->
             {f'''
-            <div style="margin-top:10px; padding:10px; background:#f0f8ff; border-radius:5px;">
+            <button onclick="toggleEdit({i})" style="background:#007bff; margin-top:10px;">Edit Job</button>
+            <div id="edit-form-{i}" style="display:none; margin-top:10px; padding:10px; background:#f0f8ff; border-radius:5px;">
                 <strong>Edit Job:</strong>
                 <form method="POST">
                     <input type="hidden" name="job_index" value="{i}">
@@ -291,6 +303,7 @@ def view_jobs():
                     <div style="margin:5px 0;"><label>Price ($):</label>
                     <select name="price">''' + ''.join([f'<option {"selected" if str(job.get("price")) == str(p) else ""}>{p}</option>' for p in range(1, 11)]) + f'''</select></div>
                     <button type="submit" name="edit" style="background:#007bff;">Update Job</button>
+                    <button type="button" onclick="toggleEdit({i})" style="background:#6c757d;">Cancel</button>
                 </form>
             </div>''' if job['email'] == session['user']['email'] and not job.get('accepted_by') else ''}
 
