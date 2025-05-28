@@ -146,7 +146,7 @@ def home():
 <div class="container">
     {welcome_message}
     <h2 style="color:#007bff;">🗑Welcome to Bin for a Buck</h2>
-    <p>We make it easy for neighbors in apartment buildings to help each other with trash runs — and maybe earn a buck along the way.</p>
+    <p>We make it easy for neighbors in apartment buildings to help each other with throwing out the trash — and maybe earn a buck along the way.</p>
         
         <p><strong>Need a hand?</strong> Post a pickup request.<br>
         <strong>Want to help?</strong> Grab a nearby job.</p>
