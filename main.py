@@ -277,14 +277,14 @@ def request_pickup():
                 <input name="contact" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Price ($1–$10):</strong></label>
+                <label><strong>Price ($0–$10):</strong></label>
                 <select name="price">
                     {''.join([f"<option>{i}</option>" for i in range(1, 11)])}
                 </select>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Credit Card Info:</strong></label>
-                <input name="card_info" placeholder="Not charged, just for confirmation" required>
+                <input name="card_info" placeholder="Cash only — free or tip if you want" required>
             </div>
             <div class="form-group" style="margin-bottom: 20px;">
                 <label><strong>Photo:</strong></label>
