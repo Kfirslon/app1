@@ -137,33 +137,30 @@ DISCLAIMER = """
 
 @app.route('/')
 def home():
-    welcome_message = f"<p>Hello, {session['user']['name']}!</p>" if 'user' in session else ""
+    welcome_message = f"""
+<div style='margin-bottom:20px; font-size:18px; color:#333;'>
+    👋 <strong>Hello, {session['user']['name']}!
+</div>
+""" if 'user' in session else ""
     return render_template_string(HTML_HEAD + f"""
 <div class="container">
-    <h2 style="color:#007bff;">🗑️ Bin for a Buck</h2>
-    <p style="font-size:16px; margin-top:10px;">
-        Let neighbors help each other with trash runs — and maybe earn a buck along the way.
-    </p>
-    
-    <p style="margin-top:20px;">
-        <strong>Need a hand?</strong> Post a pickup request.<br>
-        <strong>Want to help?</strong> Grab a nearby job.
-    </p>
+    {welcome_message}
+    <h2 style="color:#007bff;">🗑Welcome to Bin for a Buck</h2>
+    <p>We make it easy for neighbors in apartment buildings to help each other with trash runs — and maybe earn a buck along the way.</p>
+        
+        <p><strong>Need a hand?</strong> Post a pickup request.<br>
+        <strong>Want to help?</strong> Grab a nearby job.</p>
 
-    <p style="margin-top:15px;">
-        💵 Tips are optional — just $1 to $10 if you want to offer one.
-    </p>
+    <div style='margin: 25px 0; padding:15px; background:#f1f8e9; border-left:5px solid #689f38; border-radius: 8px;'>
+        💵 Tips are optional — just $1 to $10 for your choice.
+    </div>
 
-    <ul style="margin-top:20px;">
-        <li>✅ Save time and energy</li>
-        <li>🚫 No more dragging bags down stairs</li>
-        <li>👥 Let a neighbor give a hand</li>
-        <li>🏙️ Connect with people in your building</li>
-        <li>💬 Build a stronger, friendlier community</li>
-        <li>📲 Quick, easy, and helpful</li>
+    <ul 
+        <li>👥 Meet neighbors and grow your building’s community</li>
+        <li>🏙️ No more dragging trash down stairs alone</li>
+        <li>📲 Simple, quick, and helpful</li>
     </ul>
 </div>
-
     """ + HTML_FOOT)
 
 
