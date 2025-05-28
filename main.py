@@ -119,8 +119,14 @@ function toggleEdit(jobIndex) {
 """
 
 HTML_FOOT = """
+<footer style="text-align:center; font-size:12px; color:gray; margin-top:50px; padding:15px;">
+    © 2025 Bin for a Buck. All rights reserved.<br>
+    Contact: <a href="mailto:kfirslon@gmail.com">kfirslon@gmail.com</a>
+</footer>
 </body></html>
 """
+
+
 
 DISCLAIMER = """
 <div style='margin-top:40px; padding:15px; background:#fff0f0; border-left:4px solid red;'>
@@ -277,11 +283,14 @@ def request_pickup():
                 <input name="contact" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Tip ($0–$10):</strong></label>
+                <label><strong>Tip:</strong></label>
                 <select name="tip">
-                    {''.join([f"<option>{i}</option>" for i in range(0, 11)])}
-                <small style="display:block; margin-top:5px;">Free or tip if you want.</small>
+                    <option value="0">Free</option>
+                    <option value="1">$1</option>
+                    <option value="2">$2</option>
+                    <option value="5">$5</option>
                 </select>
+                <small style="display:block; margin-top:5px;">Free or tip if you want.</small>
             </div>
             <div class="form-group" style="margin-bottom: 20px;">
                 <label><strong>Photo:</strong></label>
@@ -353,7 +362,8 @@ def view_jobs():
 
         job_list += f"""
     <div class='job-box {job_class}' style="{job_style} text-align:left; padding:20px; margin-bottom:25px; border-radius:10px;">
-            <div style="font-size:18px; font-weight:bold; margin-bottom:10px; color:#007bff;">{job['name']} — ${job.get('price', '?')}</div>
+            <div style="font-size:18px; font-weight:bold; margin-bottom:10px; color:#007bff;">{job['name']} — {'Free' if job.get('price') in ['0', 0, 'Free'] else f"${job.get('price')}"}
+    </div>
             <div style="margin-bottom:10px;">
                 📍 <strong>Location:</strong> {job.get('location', 'N/A')}<br>
                 🏢 <strong>Floor:</strong> {job['floor']} &nbsp; | &nbsp; 🛍️ <strong>Bags:</strong> {job['bags']}<br>
