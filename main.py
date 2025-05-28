@@ -284,13 +284,15 @@ def request_pickup():
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Tip (Optional):</strong></label>
-                <select name="tip">
-                    <option value="0">Free</option>
-                    {''.join([f"<option>{i}</option>" for i in range(1, 11)])}
+                <select name="tip" required>
+                    <option value="" disabled selected>Select an amount</option>
+                    <option value="1">$1</option>
+                    <option value="2">$2</option>
+                    <option value="5">$5</option>
+                    <option value="10">$10</option>
                 </select>
-                <small style="display:block; margin-top:5px;">You can leave a tip — totally optional.</small>
+                <small style="display:block; margin-top:5px;">Tipping is appreciated but not required.</small>
             </div>
-
             <div class="form-group" style="margin-bottom: 20px;">
                 <label><strong>Photo:</strong></label>
                 <input type="file" name="photo">
