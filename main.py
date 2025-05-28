@@ -284,7 +284,7 @@ def request_pickup():
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Tip (Optional):</strong></label>
-                <select name="tip" required>
+                <select name="tip">
                     <option value="" disabled selected>Select an amount</option>
                     <option value="1">$1</option>
                     <option value="2">$2</option>
