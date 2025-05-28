@@ -139,26 +139,31 @@ DISCLAIMER = """
 def home():
     welcome_message = f"<p>Hello, {session['user']['name']}!</p>" if 'user' in session else ""
     return render_template_string(HTML_HEAD + f"""
-    <div class="container">
-        {welcome_message}
-        <h2>A Community Solution for Helping Each Other with Garbage Pickup</h2>
-        <p>Need help with your garbage? Request a pickup from a neighbor for just a buck (or up to $10)!</p>
+<div class="container">
+    <h2 style="color:#007bff;">🗑️ Bin for a Buck</h2>
+    <p style="font-size:16px; margin-top:10px;">
+        Let neighbors help each other with trash runs — and maybe earn a buck along the way.
+    </p>
+    
+    <p style="margin-top:20px;">
+        <strong>Need a hand?</strong> Post a pickup request.<br>
+        <strong>Want to help?</strong> Grab a nearby job.
+    </p>
 
-        <div style='margin-top:30px; padding:15px; background:#e9f7fe; border-left:5px solid #007bff; border-radius: 8px;'>
-            🤖 <strong>Coming Soon:</strong> AI-powered pickup suggestions, route optimization, and personalized recommendations.
-        </div>
+    <p style="margin-top:15px;">
+        💵 Tips are optional — just $1 to $10 if you want to offer one.
+    </p>
 
-        <div style='margin-top:30px;'>
-            <h3 style="color:#007bff;">What is Bin for a Buck?</h3>
-            <p><strong>Bin for a Buck</strong> is a community-based solution for high-rise residents who need help taking out the trash. Post your pickup, and a neighbor can help — all for just $1 to $10.</p>
-            <ul>
-                <li>✅ Save time and energy</li>
-                <li>🚫 No more hauling smelly garbage down 10 flights</li>
-                <li>👥 Let your neighbors help — and earn a buck!</li>
-                <li>📲 Simple, fast, and effective</li>
-            </ul>
-        </div>
-    </div>
+    <ul style="margin-top:20px;">
+        <li>✅ Save time and energy</li>
+        <li>🚫 No more dragging bags down stairs</li>
+        <li>👥 Let a neighbor give a hand</li>
+        <li>🏙️ Connect with people in your building</li>
+        <li>💬 Build a stronger, friendlier community</li>
+        <li>📲 Quick, easy, and helpful</li>
+    </ul>
+</div>
+
     """ + HTML_FOOT)
 
 
@@ -255,7 +260,7 @@ def request_pickup():
     <form method="POST" enctype="multipart/form-data" style="text-align:left;">
         <div class="form-group" style="margin-bottom: 15px;">
             <label><strong>Name (First and Last):</strong></label>
-            <input name="name" value="{{session['user']['name']}}" required>
+            <input name="name" required>
         </div>
         <div class="form-group" style="margin-bottom: 15px;">
             <label><strong>Location (Include Apt Number):</strong></label>
