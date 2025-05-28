@@ -239,8 +239,7 @@ def request_pickup():
             'pickup_time': request.form['pickup_time'],
             'notes': request.form['notes'],
             'contact': request.form['contact'],
-            'price': request.form['price'],
-            'card_info': request.form['card_info'],
+            'tip': request.form.get('tip', '0'),
             'photo': filename,
             'picked_up': False
         })
@@ -250,56 +249,56 @@ def request_pickup():
         return redirect(url_for('view_jobs'))
 
     return render_template_string(HTML_HEAD + f"""
-    <div class="container">
-        <h2 style="color:#007bff;">🚛 Request a Pickup</h2>
-        <p>Fill in the details below to request help from a neighbor.</p>
-        <form method="POST" enctype="multipart/form-data" style="text-align:left;">
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Name (First and Last):</strong></label>
-                <input name="name" value="{session['user']['name']}" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Location (Include Apt Number):</strong></label>
-                <input name="location" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Floor:</strong></label>
-                <input name="floor" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Number of Bags:</strong></label>
-                <input name="bags" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Pickup Time:</strong></label>
-                <input name="pickup_time" placeholder="e.g. Tuesday, 10:30 AM" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Notes:</strong></label>
-                <textarea name="notes" placeholder="Optional extra info..."></textarea>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Contact Info (Phone/Email):</strong></label>
-                <input name="contact" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Tip (Optional):</strong></label>
-                <select name="tip">
-                    <option value="" disabled selected>Select an amount</option>
-                    <option value="1">$1</option>
-                    <option value="2">$2</option>
-                    <option value="5">$5</option>
-                    <option value="10">$10</option>
-                </select>
-                <small style="display:block; margin-top:5px;">Tipping is appreciated but not required.</small>
-            </div>
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label><strong>Photo:</strong></label>
-                <input type="file" name="photo">
-            </div>
-            <button type="submit" style="width: 100%; font-size: 16px;">📬 Submit Request</button>
-        </form>
-    </div>
+<div class="container">
+    <h2 style="color:#007bff;">🚛 Request a Pickup</h2>
+    <p>Fill in the details below to request help from a neighbor.</p>
+    <form method="POST" enctype="multipart/form-data" style="text-align:left;">
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Name (First and Last):</strong></label>
+            <input name="name" value="{{session['user']['name']}}" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Location (Include Apt Number):</strong></label>
+            <input name="location" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Floor:</strong></label>
+            <input name="floor" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Number of Bags:</strong></label>
+            <input name="bags" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Pickup Time:</strong></label>
+            <input name="pickup_time" placeholder="e.g. Tuesday, 10:30 AM" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Notes:</strong></label>
+            <textarea name="notes" placeholder="Optional extra info..."></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Contact Info (Phone/Email):</strong></label>
+            <input name="contact" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label><strong>Tip (Optional):</strong></label>
+            <select name="tip">
+                <option value="" disabled selected>Select an amount</option>
+                <option value="1">$1</option>
+                <option value="2">$2</option>
+                <option value="5">$5</option>
+                <option value="10">$10</option>
+            </select>
+            <small style="display:block; margin-top:5px;">Tipping is appreciated but not required.</small>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label><strong>Photo:</strong></label>
+            <input type="file" name="photo">
+        </div>
+        <button type="submit" style="width: 100%; font-size: 16px;">📬 Submit Request</button>
+    </form>
+</div>
     """ + HTML_FOOT)
 
 
