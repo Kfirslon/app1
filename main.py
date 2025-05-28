@@ -253,7 +253,7 @@ def request_pickup():
                 <input name="name" value="{session['user']['name']}" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Location (include apt number):</strong></label>
+                <label><strong>Location (Include Apt Number):</strong></label>
                 <input name="location" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
@@ -277,7 +277,7 @@ def request_pickup():
                 <input name="contact" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Price ($0–$10):</strong></label>
+                <label><strong>Tip ($0–$10):</strong></label>
                 <select name="tip">
                     {''.join([f"<option>{i}</option>" for i in range(0, 11)])}
                 <small style="display:block; margin-top:5px;">Free or tip if you want.</small>
