@@ -253,7 +253,7 @@ def request_pickup():
                 <input name="name" value="{session['user']['name']}" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Location (Zip or Building):</strong></label>
+                <label><strong>Location (include apt number):</strong></label>
                 <input name="location" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
@@ -266,7 +266,7 @@ def request_pickup():
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Pickup Time:</strong></label>
-                <input name="pickup_time" placeholder="e.g. 10:30 AM or 2:15 PM" required>
+                <input name="pickup_time" placeholder="e.g. Tuesday, 10:30 AM" required>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Notes:</strong></label>
@@ -278,13 +278,10 @@ def request_pickup():
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Price ($0–$10):</strong></label>
-                <select name="price">
+                <select name="tip">
                     {''.join([f"<option>{i}</option>" for i in range(0, 11)])}
+                <small style="display:block; margin-top:5px;">Free or tip if you want.</small>
                 </select>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><strong>Credit Card Info:</strong></label>
-                <input name="card_info" placeholder="Cash only — free or tip if you want" required>
             </div>
             <div class="form-group" style="margin-bottom: 20px;">
                 <label><strong>Photo:</strong></label>
