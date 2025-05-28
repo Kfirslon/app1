@@ -279,7 +279,7 @@ def request_pickup():
             <div class="form-group" style="margin-bottom: 15px;">
                 <label><strong>Price ($0–$10):</strong></label>
                 <select name="price">
-                    {''.join([f"<option>{i}</option>" for i in range(1, 11)])}
+                    {''.join([f"<option>{i}</option>" for i in range(0, 11)])}
                 </select>
             </div>
             <div class="form-group" style="margin-bottom: 15px;">
